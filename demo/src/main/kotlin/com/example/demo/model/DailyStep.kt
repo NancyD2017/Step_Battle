@@ -17,5 +17,5 @@ data class DailyStep(
 
     val userId: Long,
     val date: LocalDate,
-    val steps: Int
+    var steps: Int
 )

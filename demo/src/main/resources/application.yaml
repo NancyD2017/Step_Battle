@@ -1,3 +1,74 @@
+spring:
+  application:
+    name: StepBattle
+
+  datasource:
+    url: jdbc:h2:mem:stepbattle_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  # PostgreSQL (production) - раскомментируйте для использования TODO
+  # datasource:
+  #   url: jdbc:postgresql://localhost:5432/stepbattle
+  #   driver-class-name: org.postgresql.Driver
+  #   username: your_username
+  #   password: your_password
+
+  # ===== JPA / Hibernate =====
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    # Для PostgreSQL используйте: org.hibernate.dialect.PostgreSQLDialect TODO
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    default-property-inclusion: non_null
+
 jwt:
+  # Секретный ключ для подписи токенов (в Base64)
+  # Для продакшена сгенерируйте новый: openssl rand -base64 32 TODO
   secret: MPautMEvGhX8rECGCS9eKbXB3OHzdIhOlbFKnk5rQkk=
   expiration: 86400000
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+logging:
+  level:
+    root: INFO
+    com.example.demo: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+
+stepbattle:
+  steps:
+    coins-per-1000: 10      # Монет за 1000 шагов
+    goal-bonus: 50          # Бонус за достижение цели
+    snail-threshold: 100    # Меньше этого = улитка
+    max-snails: 3           # Макс. улиток до потери котика
+  cats:
+    level-up-base-cost: 50  # Базовая стоимость улучшения
+    level-up-multiplier: 2  # Множитель стоимости за уровень
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

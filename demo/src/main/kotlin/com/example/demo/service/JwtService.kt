@@ -1,7 +1,6 @@
 package com.example.demo.service
 
 import io.jsonwebtoken.Jwts
-import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.io.Decoders
 import io.jsonwebtoken.security.Keys
 import org.springframework.beans.factory.annotation.Value
@@ -25,19 +24,19 @@ class JwtService(
 
     fun generateToken(username: String): String {
         return Jwts.builder()
-            .setSubject(username)
-            .setIssuedAt(Date())
-            .setExpiration(Date(System.currentTimeMillis() + expiration))
-            .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+            .subject(username)
+            .issuedAt(Date())
+            .expiration(Date(System.currentTimeMillis() + expiration))
+            .signWith(getSigningKey())
             .compact()
     }
 
     fun extractUsername(token: String): String {
-        return Jwts.parserBuilder()
-            .setSigningKey(getSigningKey())
+        return Jwts.parser()
+            .verifyWith(getSigningKey() as javax.crypto.SecretKey)
             .build()
-            .parseClaimsJws(token)
-            .body
+            .parseSignedClaims(token)
+            .payload
             .subject
     }
 

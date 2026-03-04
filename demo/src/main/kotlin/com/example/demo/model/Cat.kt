@@ -9,7 +9,6 @@ import jakarta.persistence.Table
 @Entity
 @Table(name = "cats")
 data class Cat(
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
@@ -18,5 +17,7 @@ data class Cat(
     val rarity: String,
     val power: Int,
     val price: Int,
-    val description: String
+    val description: String,
+    val imageUrl: String = "",
+    val cardColor: String = "4CAF50"
 )
