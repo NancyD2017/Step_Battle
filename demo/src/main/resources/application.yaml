@@ -1,0 +1,3 @@
+jwt:
+  secret: MPautMEvGhX8rECGCS9eKbXB3OHzdIhOlbFKnk5rQkk=
+  expiration: 86400000
